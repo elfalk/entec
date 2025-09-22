@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر ENTEC - إلكترونيات، موبايلات، ساعات، لابتوبات</title>
+        <link rel="icon" type="image/png" href="n.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #69b1da;
+            --dark-bg: #000000;
+            --card-bg: #1a1a2e;
+            --text-color: #f1f1f1;
+            --modal-bg: rgba(26, 26, 46, 0.95);
+            --overlay-bg: rgba(15, 15, 26, 0.8);
+            --gradient-start: #69b1da;
+            --gradient-end: #e81cff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* شريط التنقل الجديد */
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            background-color: rgba(10, 10, 20, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--accent), #a212c9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-logo i {
+            margin-left: 10px;
+            font-size: 28px;
+            color: var(--accent);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Header Styles */
+        header {
+            height: 70vh;
+            min-height: 400px;
+            max-height: 700px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+            margin-top: 70px;
+        }
+        
+        #header-image {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            opacity: 1;
+            pointer-events: none;
+        }
+        
+        .header-content {
+            text-align: center;
+            z-index: 2;
+            position: absolute;
+            width: 100%;
+            bottom: 30px; /* مسافة من أسفل الهيدر */
+            right: 0;
+            left: 0;
+            transform: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 20px;
+        }
+        
+        .cta-button {
+            position: relative;
+            width: 160px;
+            height: 50px;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            color: white;
+            flex-direction: column;
+            justify-content: center;
+            border: none;
+            padding: 12px;
+            gap: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 20px auto 0;
+            font-weight: 700;
+            text-decoration: none;
+            z-index: 10;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            left: -4px;
+            top: -1px;
+            margin: auto;
+            width: 168px;
+            height: 58px;
+            border-radius: 10px;
+            background: linear-gradient(-45deg, #e81cff 0%, #40c9ff 100%);
+            z-index: -10;
+            pointer-events: none;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .cta-button::after {
+            content: "";
+            z-index: -1;
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(-45deg, #fc00ff 0%, #00dbde 100%);
+            transform: translate3d(0, 0, 0) scale(0.95);
+            filter: blur(20px);
+        }
+        
+        .cta-button:hover::after {
+            filter: blur(30px);
+        }
+        
+        .cta-button:hover::before {
+            transform: rotate(-180deg);
+        }
+        
+        .cta-button:active::before {
+            scale: 0.7;
+        }
+
+        /* Currency Selector */
+        .currency-selector {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .currency-selector select {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--accent);
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 40px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--accent), transparent);
+        }
+
+        /* Cards Grid - Updated for products */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        /* Product Card Styles */
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(232, 28, 255, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #1a1a2e;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .product-description {
+            font-size: 14px;
+            margin-bottom: 15px;
+            color: #ccc;
+            flex-grow: 1;
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-top: auto;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            color: #FFD700;
+        }
+
+        .product-rating i {
+            margin-left: 2px;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: var(--overlay-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background-color: var(--modal-bg);
+            width: 90%;
+            max-width: 800px;
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(50px);
+            transition: transform 0.4s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 24px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+
+        .modal-close:hover {
+            background-color: rgba(232, 28, 255, 0.2);
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .modal-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+       .modal-image {
+    width: 100%;
+    max-height: none;
+    height: auto;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #1a1a2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+      .modal-image img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    display: block;
+    background: 1a1a2e;
+}
+        .modal-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .modal-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .modal-price {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin: 15px 0;
+            color: var(--accent);
+        }
+
+        .modal-features {
+            margin: 15px 0;
+            padding-right: 20px;
+        }
+
+        .modal-features li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .modal-features li::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: 5px;
+        }
+
+        .modal-supplier {
+            font-size: 14px;
+            color: #aaa;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-order {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(232, 28, 255, 0.4);
+        }
+
+        .btn-order:hover {
+            background-color: #d100e6;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(232, 28, 255, 0.5);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #0a0a14;
+            padding: 40px 0 20px;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo i {
+            margin-left: 10px;
+        }
+
+        .footer-links h3, .footer-social h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after, .footer-social h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* تعديل ألوان أيقونات وسائل التواصل لتكون طبيعية */
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: #f1f1f1;
+            border-radius: 50%;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a i {
+            color: #000;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a.facebook:hover i {
+            color: #1877F2;
+        }
+
+        .social-icons a.twitter:hover i {
+            color: #1DA1F2;
+        }
+
+        .social-icons a.instagram:hover i {
+            color: #E1306C;
+        }
+
+        .social-icons a.tiktok:hover i {
+            color: #f3efef;
+        }
+
+        .social-icons a.youtube:hover i {
+            color: #FF0000;
+        }
+
+        .social-icons a.snapchat:hover i {
+            color: #FFFC00;
+            text-shadow: 0 0 2px #000;
+        }
+
+        .social-icons a.telegram:hover i {
+            color: #0088cc;
+        }
+
+        .social-icons a.spotify:hover i {
+            color: #1DB954;
+        }
+
+        .social-icons a.whatsapp:hover i {
+            color: #25D366;
+        }
+
+        .social-icons a.linkedin:hover i {
+            color: #0077B5;
+        }
+
+        .social-icons a.pinterest:hover i {
+            color: #BD081C;
+        }
+
+        .social-icons a.kwai:hover i {
+            color: #FF6600;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: #888;
+        }
+
+        /* CodePen Button Card Style */
+        .codepen-button {
+  display: block;
+  cursor: pointer;
+  color: white;
+  margin: 0 auto;
+  position: relative;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 3px;
+  isolation: isolate;
+  box-shadow: 0 4px 24px 0 rgba(80,80,80,0.12);
+  transition: transform 0.2s;
+  background: none;
+  border: none;
+}
+
+.codepen-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400%;
+  height: 100%;
+  background: linear-gradient(115deg,#4fcf70,#fad648,#a767e5,#12bcfe,#44ce7b);
+  background-size: 25% 100%;
+  animation: codepen-border 0.75s linear infinite;
+  animation-play-state: paused;
+  translate: -5% 0%;
+  transition: translate 0.25s ease-out;
+  z-index: 0;
+}
+
+.codepen-button:hover::before {
+  animation-play-state: running;
+  transition-duration: 0.75s;
+  translate: 0% 0%;
+}
+
+@keyframes codepen-border {
+  to {
+    transform: translateX(-25%);
+  }
+}
+
+.codepen-button span {
+  position: relative;
+  display: block;
+  padding: 1.2rem 1.5rem;
+  font-size: 1.1rem;
+  background: #1a1a2e;
+  border-radius: 8px;
+  height: 100%;
+  z-index: 1;
+}
+
+/* تعديل محتوى الكارت ليكون داخل الزر */
+.codepen-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 10px 0;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                flex-direction: column;
+                background-color: rgba(10, 10, 20, 0.98);
+                width: 80%;
+                height: 100vh;
+                padding: 40px 20px;
+                transition: right 0.3s ease;
+                gap: 25px;
+            }
+            
+            .nav-menu.active {
+                right: 0;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+            }
+            
+            .modal {
+                width: 95%;
+                padding: 20px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            #header-image {
+                height: 180%;
+                min-height: 120px;
+                max-height: 220px;
+                object-fit: cover;
+            }
+            
+            header {
+        height: 200px;
+        min-height: 120px;
+        max-height: 240px;
+        margin-top: 60px;
+    }
+            
+            .header-content {
+                bottom: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .section-title {
+                font-size: 24px;
+            }
+            
+            .nav-logo {
+                font-size: 20px;
+            }
+            
+            .nav-logo i {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل الجديد -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="ingex.html" class="nav-logo">
+                <img src="shirt.png" alt="ENTEC Logo" style="height:36px;vertical-align:middle;margin-left:10px;">
+              
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="ingex.html">Home</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <img src="purple3.png" alt="header image" id="header-image">
+        <div class="header-content">
+           
+            <a href="ingex.html" class="cta-button">الرئيسية</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="currency-selector">
+            <select id="currency-select">
+                <option value="EGP">جنيه مصري (EGP)</option>
+                <option value="USD">دولار أمريكي (USD)</option>
+                <option value="SAR">ريال سعودي (SAR)</option>
+                <option value="AED">درهم إماراتي (AED)</option>
+                <option value="KWD">دينار كويتي (KWD)</option>
+            </select>
+        </div>
+
+        <!-- قسم الإلكترونيات -->
+        <section id="electronics">
+            <h2 class="section-title">الإلكترونيات</h2>
+            <div class="products-grid" id="electronics-grid">
+                <!-- سيتم تعبئة المنتجات بواسطة JavaScript -->
+            </div>
+        </section>
+
+        <!-- قسم الموبايلات -->
+        <section id="mobiles">
+            <h2 class="section-title">الموبايلات</h2>
+            <div class="products-grid" id="mobiles-grid">
+                <!-- سيتم تعبئة المنتجات بواسطة JavaScript -->
+            </div>
+        </section>
+
+        <!-- قسم الساعات -->
+        <section id="watches">
+            <h2 class="section-title">الساعات</h2>
+            <div class="products-grid" id="watches-grid">
+                <!-- سيتم تعبئة المنتجات بواسطة JavaScript -->
+            </div>
+        </section>
+
+        <!-- قسم اللابتوبات -->
+        <section id="laptops">
+            <h2 class="section-title">اللابتوبات</h2>
+            <div class="products-grid" id="laptops-grid">
+                <!-- سيتم تعبئة المنتجات بواسطة JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="shirt.png" alt="ENTEC Logo" style="height:36px;vertical-align:middle;margin-left:10px;">
+                    </div>
+                        <p>كل ما هو رقمي في مكان واحد.
+                      منتجات سريعة، آمنة، ومضمونة."</p>
+                </div>
+                
+                </div>
+                <div class="footer-links">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html"> الرئسيه</a></li>
+                        <li><a href="free.html">الخدمات المجانية</a></li>
+                        <li><a href="book.html">الكورسات</a></li>
+                        <li><a href="social.html">المطوريين</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>تواصل معنا</h3>
+                    <div class="social-icons">
+                <a href="https://www.facebook.com/share/16iCzaod1C/"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://x.com/Youssef011020?t=oNgnw7NKtrYVwG30izHPqw&s=09"><i class="fab fa-twitter"></i></a>
+                <a href="https://whatsapp.com/channel/0029VbB8jPFIyPtW3lkeg33y"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.linkedin.com/in/yoseef-elbadry-106037380?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ENTEC Pro. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal لعرض تفاصيل المنتج -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="modal-close">✕</button>
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">اسم المنتج</h3>
+            </div>
+            <div class="modal-content">
+                <div class="modal-image">
+                    <img id="modal-image" src="" alt="Product Image">
+                </div>
+                <div class="modal-price" id="modal-price">السعر: 100 EGP</div>
+                <div class="modal-details">
+                    <div>
+                        <h4>المواصفات</h4>
+                        <ul class="modal-features" id="modal-features">
+                            <li>ميزة 1</li>
+                            <li>ميزة 2</li>
+                            <li>ميزة 3</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>التفاصيل</h4>
+                        <p id="modal-description">وصف المنتج</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-order" id="btn-order">اطلب الآن</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // بيانات المنتجات (تم استيرادها من AliExpress)
+        const products = {
+            electronics: [
+                {
+                    id: 'elec-1',
+                    name: 'سماعات بلوتوث لاسلكية',
+                    image: 'image2/1.png',
+                    price: 450,
+                    description: 'سماعات بلوتوث لاسلكية مع عزل ضوضاء، ميكروفون مدمج، قابلة للطي ومريحة للاستخدام.',
+                    features: [
+                        'تقنية عزل الضوضاء',
+                        'بطارية تعمل حتى 30 ساعة',
+                        'ميكروفون مدمج للمكالمات',
+                        'قابلة للطي وتخزين سهلة'
+                    ],
+                    rating: 4.5
+                },
+                {
+                    id: 'elec-2',
+                    name: 'شاحن لاسلكي سريع',
+                    image: 'image2/2.png',
+                    price: 250,
+                    description: 'شاحن لاسلكي سريع بشهادة Qi، متوافق مع معظم الهواتف الذكية.',
+                    features: [
+                        'شحن سريع لاسلكي',
+                        'متوافق مع معيار Qi',
+                        'حماية من الشحن الزائد',
+                        'تصميم أنيق ومضاد للانزلاق'
+                    ],
+                    rating: 4.3
+                },
+                {
+                    id: 'elec-3',
+                    name: 'كاميرا مراقبة ذكية',
+                    image: 'image2/3.png',
+                    price: 600,
+                    description: 'كاميرا مراقبة ذكية بدقة 1080P، مع رؤية ليلية وكشف حركة، للاستخدام الداخلي والخارجي.',
+                    features: [
+                        'دقة 1080P Full HD',
+                        'رؤية ليلية حتى 10 أمتار',
+                        'كشف حركة وإشعارات فورية',
+                        'تخزين سحابي ومحلي'
+                    ],
+                    rating: 4.7
+                },
+                {
+                    id: 'elec-4',
+                    name: 'سماعات أذن لاسلكية',
+                    image: 'image2/4.png',
+                    price: 350,
+                    description: 'سماعات أذن لاسلكية TWS بتقنية Bluetooth 5.0، مع عزل ضوضاء وصوت ستيريو.',
+                    features: [
+                        'تقنية Bluetooth 5.0',
+                        'حجرة شحن محمولة',
+                        'عزل ضوضاء فعال',
+                        'بطارية تعمل حتى 20 ساعة'
+                    ],
+                    rating: 4.4
+                },
+                {
+                    id: 'elec-5',
+                    name: 'منظم شحن متعدد المنافذ',
+                    image: 'image2/5.png',
+                    price: 300,
+                    description: 'منظم شحن متعدد المنافذ مع 6 منافذ USB، لشحن جميع أجهزتك في وقت واحد.',
+                    features: [
+                        '6 منافذ USB للشحن',
+                        'شحن سريع لكل منفذ',
+                        'حماية من التيار الزائد',
+                        'تصميم مدمج وأنيق'
+                    ],
+                    rating: 4.2
+                },
+                {
+                    id: 'elec-6',
+                    name: 'لوحة مفاتيح لاسلكية',
+                    image: 'image2/6.png',
+                    price: 400,
+                    description: 'لوحة مفاتيح وفأرة لاسلكية بتقنية 2.4GHz، تصميم مريح للاستخدام الطويل.',
+                    features: [
+                        'تقنية لاسلكية 2.4GHz',
+                        'تصميم ergonomic مريح',
+                        'مدى عمل حتى 10 أمتار',
+                        'بطاريات تدوم طويلاً'
+                    ],
+                    rating: 4.5
+                },
+                {
+                    id: 'elec-7',
+                    name: 'سماعة بلوتوث محمولة',
+                    image: 'image2/7.png',
+                    price: 500,
+                    description: 'سماعة بلوتوث محمولة مضادة للماء، مع أضواء LED وصوت ستيريو قوي.',
+                    features: [
+                        'مقاومة للماء IPX7',
+                        'أضواء LED متعددة الألوان',
+                        'صوت ستيريو قوي',
+                        'بطارية تعمل حتى 12 ساعة'
+                    ],
+                    rating: 4.6
+                },
+                {
+                    id: 'elec-8',
+                    name: 'شاشة عرض ذكية محمولة',
+                    image: 'image2/8.png',
+                    price: 1200,
+                    description: 'شاشة عرض ذكية محمولة 10 بوصة بشاشة HD، بنظام Android، للبث والفيديو.',
+                    features: [
+                        'شاشة 10 بوصة بدقة HD',
+                        'نظام Android',
+                        'WiFi و Bluetooth',
+                        'مدمج بها سماعات'
+                    ],
+                    rating: 4.3
+                },
+                {
+                    id: 'elec-9',
+                    name: 'جهاز تحكم عن بعد عالمي',
+                    image: 'image2/9.png',
+                    price: 150,
+                    description: 'جهاز تحكم عن بعد عالمي متوافق مع معظم أجهزة التلفاز والأجهزة الإلكترونية.',
+                    features: [
+                        'متوافق مع أكثر من 6000 جهاز',
+                        'شاشة LCD تعمل باللمس',
+                        'قاعدة بيانات قابلة للتحديث',
+                        'تصميم مريح في اليد'
+                    ],
+                    rating: 4.1
+                },
+                {
+                    id: 'elec-10',
+                    name: 'نظارة واقع افتراضي',
+                    image: 'image2/10.png',
+                    price: 350,
+                    description: 'نظارة واقع افتراضي مع جهاز تحكم، لمشاهدة أفلام 3D ولعب الألعاب.',
+                    features: [
+                        'متوافقة مع الهواتف الذكية',
+                        'عدسات قابلة للتعديل',
+                        'جهاز تحكم لاسلكي',
+                        'تصميم مريح للرأس'
+                    ],
+                    rating: 4.0
+                }
+            ],
+            mobiles: [
+                {
+                    id: 'mob-1',
+                    name: 'هاتف ذكي بشاشة 6.5 بوصة',
+                    image: 'image3/1.png',
+                    price: 2200,
+                    description: 'هاتف ذكي بشاشة 6.5 بوصة بدقة HD، ذاكرة 4GB RAM، تخزين 64GB، كاميرا رباعية.',
+                    features: [
+                        'شاشة 6.5 بوصة بدقة HD+',
+                        'معالج ثماني النواة',
+                        'كاميرا خلفية رباعية 48MP',
+                        'بطارية 4000mAh'
+                    ],
+                    rating: 4.5
+                },
+                {
+                    id: 'mob-2',
+                    name: 'هاتف ذكي بمقاومة الماء',
+                    image: 'image3/2.png',
+                    price: 2800,
+                    description: 'هاتف ذكي مقاوم للماء بشاشة 6.3 بوصة، ذاكرة 6GB RAM، تخزين 128GB.',
+                    features: [
+                        'مقاوم للماء IP68',
+                        'شاشة 6.3 بوصة كاملة',
+                        'كاميرا 48MP',
+                        'بطارية 5000mAh'
+                    ],
+                    rating: 4.7
+                },
+                {
+                    id: 'mob-3',
+                    name: 'هاتف ذكي بتصميم قابل للطي',
+                    image: 'image3/3.png',
+                    price: 4500,
+                    description: 'هاتف ذكي بتصميم قابل للطي بشاشة 7.2 بوصة مرنة، مواصفات عالية وأداء متميز.',
+                    features: [
+                        'شاشة قابلة للطي 7.2 بوصة',
+                        'أداء عالي بذاكرة 8GB RAM',
+                        'تخزين 256GB',
+                        'كاميرا 64MP'
+                    ],
+                    rating: 4.8
+                },
+                {
+                    id: 'mob-4',
+                    name: 'هاتف ذكي للالعاب',
+                    image: 'image3/4.png',
+                    price: 3800,
+                    description: 'هاتف ذكي مخصص للألعاب بشاشة AMOLED 6.7 بوصة، ذاكرة 12GB RAM، أداء ممتاز.',
+                    features: [
+                        'شاشة AMOLED 6.7 بوصة',
+                        'ذاكرة 12GB RAM للألعاب',
+                        'نظام تبريد متقدم',
+                        'بطارية 6000mAh'
+                    ],
+                    rating: 4.6
+                },
+                {
+                    id: 'mob-5',
+                    name: 'هاتف ذكي بكاميرا 108MP',
+                    image: 'image3/5.png',
+                    price: 3200,
+                    description: 'هاتف ذكي بكاميرا رئيسية بدقة 108MP، شاشة AMOLED 6.8 بوصة، أداء تصوير متميز.',
+                    features: [
+                        'كاميرا 108MP الرئيسية',
+                        'شاشة AMOLED 6.8 بوصة',
+                        'ذاكرة 8GB RAM',
+                        'بطارية 5000mAh'
+                    ],
+                    rating: 4.7
+                },
+                {
+                    id: 'mob-6',
+                    name: 'هاتف ذكي اقتصادي',
+                    image: 'image3/6.png',
+                    price: 1500,
+                    description: 'هاتف ذكي اقتصادي بشاشة 6.5 بوصة، ذاكرة 4GB RAM، أداء جيد وسعر منافس.',
+                    features: [
+                        'شاشة 6.5 بوصة HD',
+                        'ذاكرة 4GB RAM',
+                        'كاميرا ثلاثية 16MP',
+                        'بطارية 5000mAh'
+                    ],
+                    rating: 4.2
+                },
+                {
+                    id: 'mob-7',
+                    name: 'هاتف ذكي بشاشة 90Hz',
+                    image: 'image3/7.png',
+                    price: 2600,
+                    description: 'هاتف ذكي بشاشة 6.6 بوصة بمعدل تحدث 90Hz، أداء سلس وتجربة استخدام متميزة.',
+                    features: [
+                        'شاشة 6.6 بوصة بمعدل 90Hz',
+                        'ذاكرة 6GB RAM',
+                        'تخزين 128GB',
+                        'بطارية 4500mAh'
+                    ],
+                    rating: 4.5
+                },
+                {
+                    id: 'mob-8',
+                    name: 'هاتف ذكي مقاوم للصدمات',
+                    image: 'image3/8.png',
+                    price: 1900,
+                    description: 'هاتف ذكي مقاوم للصدمات والماء، تصميم متين، مثالي للاستخدام في الظروف القاسية.',
+                    features: [
+                        'مقاوم للصدمات والماء',
+                        'شاشة 5.7 بوصة',
+                        'تصميم متين ومقاوم',
+                        'بطارية 5000mAh'
+                    ],
+                    rating: 4.3
+                },
+                {
+                    id: 'mob-9',
+                    name: 'هاتف ذكي بشريحة 5G',
+                    image: 'image3/9.png',
+                    price: 3500,
+                    description: 'هاتف ذكي يدعم تقنية 5G، بشاشة 6.7 بوصة بمعدل 120Hz، أداء عالي وسرعة اتصال فائقة.',
+                    features: [
+                        'دعم تقنية 5G',
+                        'شاشة 6.7 بوصة 120Hz',
+                        'ذاكرة 8GB RAM',
+                        'تخزين 256GB'
+                    ],
+                    rating: 4.8
+                },
+                {
+                    id: 'mob-10',
+                    name: 'هاتف ذكي مع قلم stylus',
+                    image: 'image3/10.png',
+                    price: 3300,
+                    description: 'هاتف ذكي مزود بقلم stylus، شاشة 6.8 بوصة، مثالي للرسم والكتابة والملاحظات.',
+                    features: [
+                        'مزود بقلم stylus',
+                        'شاشة 6.8 بوصة',
+                        'كاميرا 108MP',
+                        'بطارية 5000mAh'
+                    ],
+                    rating: 4.6
+                }
+            ],
+            watches: [
+                {
+                    id: 'watch-1',
+                    name: 'ساعة ذكية بشاشة 1.3 بوصة',
+                    image: 'image4/1.png',
+                    price: 400,
+                    description: 'ساعة ذكية بشاشة 1.3 بوصة تعمل باللمس، مراقبة معدل ضربات القلب وضغط الدم والنوم.',
+                    features: [
+                        'شاشة 1.3 بوصة تعمل باللمس',
+                        'مراقبة معدل ضربات القلب',
+                        'مراقبة ضغط الدم',
+                        'مقاومة للماء IP67'
+                    ],
+                    rating: 4.4
+                },
+                {
+                    id: 'watch-2',
+                    name: 'ساعة رياضية ذكية',
+                    image: 'image4/2.png',
+                    price: 500,
+                    description: 'ساعة رياضية ذكية بشاشة 1.4 بوصة HD، تتبع الأكسجين في الدم، 100 وضع رياضي.',
+                    features: [
+                        'شاشة 1.4 بوصة HD',
+                        'تتبع الأكسجين في الدم',
+                        '100 وضع رياضي',
+                        'مقاومة للماء IP68'
+                    ],
+                    rating: 4.6
+                },
+                {
+                    id: 'watch-3',
+                    name: 'ساعة أبل الذكية المقلدة',
+                    image: 'image4/3.png',
+                    price: 600,
+                    description: 'ساعة ذكية تشبه ساعة أبل Series 7، بشاشة 1.9 بوصة ريتينا، مراقبة ECG والنوم.',
+                    features: [
+                        'تصميم يشبه Apple Watch',
+                        'شاشة 1.9 بوصة ريتينا',
+                        'مراقبة ECG للقلب',
+                        'تتبع النوم'
+                    ],
+                    rating: 4.3
+                },
+                {
+                    id: 'watch-4',
+                    name: 'ساعة ذكية للاطفال',
+                    image: 'image4/4.png',
+                    price: 350,
+                    description: 'ساعة ذكية للأطفال مع متتبع GPS، كاميرا، اتصال هاتفي، وظيفة SOS، مقاومة للماء.',
+                    features: [
+                        'متتبع GPS لتحديد الموقع',
+                        'كاميرا للتصوير',
+                        'زر SOS للطوارئ',
+                        'مقاومة للماء'
+                    ],
+                    rating: 4.2
+                },
+                {
+                    id: 'watch-5',
+                    name: 'ساعة ذكية فاخرة',
+                    image: 'image4/5.png',
+                    price: 800,
+                    description: 'ساعة ذكية فاخرة بشاشة AMOLED 1.6 بوصة، هيكل من الفولاذ المقاوم للصدأ، مقاومة للماء 5ATM.',
+                    features: [
+                        'شاشة AMOLED 1.6 بوصة',
+                        'هيكل من الفولاذ المقاوم للصدأ',
+                        'مقاومة للماء 5ATM',
+                        'تصميم فاخر وأنيق'
+                    ],
+                    rating: 4.7
+                },
+                {
+                    id: 'watch-6',
+                    name: 'ساعة ذكية بنظام اندرويد',
+                    image: 'image4/6.png',
+                    price: 900,
+                    description: 'ساعة ذكية بنظام اندرويد، شاشة 1.8 بوصة، دعم شريحة SIM، اتصال WiFi وGPS.',
+                    features: [
+                        'نظام اندرويد كامل',
+                        'شاشة 1.8 بوصة',
+                        'دعم شريحة SIM',
+                        'اتصال WiFi وGPS'
+                    ],
+                    rating: 4.5
+                },
+                {
+                    id: 'watch-7',
+                    name: 'ساعة ذكية للسباحة',
+                    image: 'image4/7.png',
+                    price: 550,
+                    description: 'ساعة ذكية مخصصة للسباحة بمقاومة ماء 5ATM، تتبع خاص للسباحة، مراقبة معدل ضربات القلب.',
+                    features: [
+                        'مقاومة للماء 5ATM',
+                        'وضع تتبع السباحة',
+                        'مراقبة معدل ضربات القلب تحت الماء',
+                        'تتبع المسافة والسرعات'
+                    ],
+                    rating: 4.4
+                },
+                {
+                    id: 'watch-8',
+                    name: 'ساعة ذكية بشاشة منحنية',
+                    image: 'image4/8.png',
+                    price: 700,
+                    description: 'ساعة ذكية بشاشة منحنية 1.5 بوصة AMOLED، مراقبة الأكسجين في الدم ومعدل ضربات القلب.',
+                    features: [
+                        'شاشة منحنية 1.5 بوصة AMOLED',
+                        'مراقبة الأكسجين في الدم',
+                        '100 وضع رياضي',
+                        'تصميم مبتكر'
+                    ],
+                    rating: 4.6
+                },
+                {
+                    id: 'watch-9',
+                    name: 'ساعة ذكية طويلة البطارية',
+                    image: 'image4/9.png',
+                    price: 450,
+                    description: 'ساعة ذكية بطارية طويلة المدى حتى 30 يوم، شاشة 1.4 بوصة، مراقبة النوم ومعدل ضربات القلب.',
+                    features: [
+                        'بطارية تعمل حتى 30 يوم',
+                        'شاشة 1.4 بوصة',
+                        'مراقبة النوم',
+                        'تتبع النشاط اليومي'
+                    ],
+                    rating: 4.5
+                },
+                {
+                    id: 'watch-10',
+                    name: 'ساعة ذكية كلاسيكية',
+                    image: 'image4/10.png',
+                    price: 400,
+                    description: 'ساعة ذكية بتصميم كلاسيكي، شاشة 1.3 بوصة، سوار جلد، مراقبة ضغط الدم والنوم.',
+                    features: [
+                        'تصميم كلاسيكي أنيق',
+                        'سوار من الجلد',
+                        'مراقبة ضغط الدم',
+                        'تتبع النوم'
+                    ],
+                    rating: 4.3
+                }
+            ],
+            laptops: [
+                {
+                    id: 'lap-1',
+                    name: 'لابتوب 15.6 بوصة بمعالج Core i7',
+                    image: 'image5/1.png',
+                    price: 8500,
+                    description: 'لابتوب 15.6 بوصة بشاشة FHD، معالج Intel Core i7، ذاكرة 16GB RAM، تخزين 512GB SSD.',
+                    features: [
+                        'شاشة 15.6 بوصة FHD',
+                        'معالج Intel Core i7',
+                        'ذاكرة 16GB RAM',
+                        'تخزين 512GB SSD'
+                    ],
+                    rating: 4.7
+                },
+                {
+                    id: 'lap-2',
+                    name: 'لابتوب ألعاب 17.3 بوصة',
+                    image: 'image5/2.png',
+                    price: 12000,
+                    description: 'لابتوب ألعاب 17.3 بوصة بشاشة FHD 144Hz، معالج Intel Core i7، كارت شاشة NVIDIA RTX 3060.',
+                    features: [
+                        'شاشة 17.3 بوصة FHD 144Hz',
+                        'معالج Intel Core i7',
+                        'كارت شاشة NVIDIA RTX 3060',
+                        'ذاكرة 16GB RAM'
+                    ],
+                    rating: 4.8
+                },
+                {
+                    id: 'lap-3',
+                    name: 'لابتوب محمول خفيف الوزن',
+                    image: 'image5/3.png',
+                    price: 6000,
+                    description: 'لابتوب محمول خفيف الوزن بشاشة 14 بوصة FHD، معالج Intel Core i5، تصميم معدني أنيق.',
+                    features: [
+                        'شاشة 14 بوصة FHD',
+                        'معالج Intel Core i5',
+                        'تصميم معدني خفيف الوزن',
+                        'تخزين 256GB SSD'
+                    ],
+                    rating: 4.5
+                },
+                {
+                    id: 'lap-4',
+                    name: 'لابتوب 2 في 1 قابل للتحويل',
+                    image: 'image5/4.png',
+                    price: 7000,
+                    description: 'لابتوب 2 في 1 قابل للتحويل بشاشة لمس 13.3 بوصة، معالج Intel Core i5، متعدد الاستخدامات.',
+                    features: [
+                        'شاشة لمس 13.3 بوصة',
+                        'تصميم 2 في 1 (لابتوب/تابلت)',
+                        'معالج Intel Core i5',
+                        'قلم stylus مضمن'
+                    ],
+                    rating: 4.6
+                },
+                {
+                    id: 'lap-5',
+                    name: 'لابتوب اقتصادي 15.6 بوصة',
+                    image: 'image5/5.png',
+                    price: 3500,
+                    description: 'لابتوب اقتصادي 15.6 بوصة بشاشة HD، معالج Intel Celeron، مناسب للمهام الأساسية.',
+                    features: [
+                        'شاشة 15.6 بوصة HD',
+                        'معالج Intel Celeron',
+                        'ذاكرة 4GB RAM',
+                        'تخزين 128GB SSD'
+                    ],
+                    rating: 4.2
+                },
+                {
+                    id: 'lap-6',
+                    name: 'لابتوب محترف للعمل',
+                    image: 'image5/6.png',
+                    price: 7500,
+                    description: 'لابتوب محترف للعمل بشاشة 15.6 بوصة FHD، معالج Intel Core i5، حساس بصمة للأمان.',
+                    features: [
+                        'شاشة 15.6 بوصة FHD',
+                        'معالج Intel Core i5',
+                        'حساس بصمة للأمان',
+                        'تصميم احترافي'
+                    ],
+                    rating: 4.6
+                },
+                {
+                    id: 'lap-7',
+                    name: 'لابتوب للطلاب',
+                    image: 'image5/7.png',
+                    price: 4500,
+                    description: 'لابتوب مخصص للطلاب بشاشة 14 بوصة HD، أداء جيد، بطارية طويلة المدى، سعر مناسب.',
+                    features: [
+                        'شاشة 14 بوصة HD',
+                        'معالج Intel Pentium',
+                        'بطارية تعمل حتى 10 ساعات',
+                        'خفيف الوزن'
+                    ],
+                    rating: 4.3
+                },
+                {
+                    id: 'lap-8',
+                    name: 'لابتوب للتصميم الجرافيكي',
+                    image: 'image5/8.png',
+                    price: 15000,
+                    description: 'لابتوب للتصميم الجرافيكي بشاشة 16 بوصة 4K، معالج Intel Core i9، كارت شاشة NVIDIA RTX 3070.',
+                    features: [
+                        'شاشة 16 بوصة بدقة 4K',
+                        'معالج Intel Core i9',
+                        'كارت شاشة NVIDIA RTX 3070',
+                        'ذاكرة 32GB RAM'
+                    ],
+                    rating: 4.9
+                },
+                {
+                    id: 'lap-9',
+                    name: 'لابتوب بشاشة OLED',
+                    image: 'image5/9.png',
+                    price: 9500,
+                    description: 'لابتوب بشاشة OLED 13.3 بوصة بدقة 4K، ألوان زاهية، معالج Intel Core i7، أداء متميز.',
+                    features: [
+                        'شاشة OLED 13.3 بوصة 4K',
+                        'ألوان زاهية وتباين عالي',
+                        'معالج Intel Core i7',
+                        'منفذ Thunderbolt 4'
+                    ],
+                    rating: 4.7
+                },
+                {
+                    id: 'lap-10',
+                    name: 'لابتوب صغير الحجم 11.6 بوصة',
+                    image: 'image5/10.png',
+                    price: 2500,
+                    description: 'لابتوب صغير الحجم 11.6 بوصة، خفيف الوزن، مثالي للسفر والاستخدام المحمول.',
+                    features: [
+                        'شاشة 11.6 بوصة HD',
+                        'خفيف الوزن (أقل من 1kg)',
+                        'تصميم مضغوط',
+                        'بطارية طويلة المدى'
+                    ],
+                    rating: 4.1
+                }
+            ]
+        };
+
+        // Currency conversion rates (can be edited)
+        const currencyRates = {
+            EGP: 1,
+            USD: 0.032,
+            SAR: 0.12,
+            AED: 0.12,
+            KWD: 0.0098
+        };
+
+        // DOM Elements
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalClose = document.getElementById('modal-close');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDescription = document.getElementById('modal-description');
+        const modalPrice = document.getElementById('modal-price');
+        const modalFeatures = document.getElementById('modal-features');
+        const modalImage = document.getElementById('modal-image');
+        const btnOrder = document.getElementById('btn-order');
+        const currencySelect = document.getElementById('currency-select');
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        // Current currency
+        let currentCurrency = 'EGP';
+
+        // Fill products in the grid
+        function fillProductsGrid() {
+            for (const category in products) {
+                const grid = document.getElementById(`${category}-grid`);
+                if (!grid) continue;
+
+                grid.innerHTML = '';
+
+                products[category].forEach(product => {
+                    // إنشاء عنصر الكارت كزر codepen
+                    const cardButton = document.createElement('button');
+                    cardButton.className = 'codepen-button';
+                    cardButton.type = 'button';
+                    cardButton.setAttribute('data-product-id', product.id);
+
+                    // Generate star rating HTML
+                    let starsHtml = '';
+                    const fullStars = Math.floor(product.rating);
+                    const hasHalfStar = product.rating % 1 !== 0;
+                    for (let i = 0; i < fullStars; i++) {
+                        starsHtml += '<i class="fas fa-star"></i>';
+                    }
+                    if (hasHalfStar) {
+                        starsHtml += '<i class="fas fa-star-half-alt"></i>';
+                    }
+                    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+                    for (let i = 0; i < emptyStars; i++) {
+                        starsHtml += '<i class="far fa-star"></i>';
+                    }
+
+                    // محتوى الكارت
+                    let cardContent = '';
+                    if (category === 'software') {
+                        cardContent = `
+                          <div class="codepen-card-content">
+                            <div class="icon-image">
+                              <img src="${product.image}" alt="${product.name}">
+                            </div>
+                            <div class="icon-name">${product.name}</div>
+                            <div class="icon-price">${formatPrice(product.price, currentCurrency)}</div>
+                            <div class="product-rating">${starsHtml}</div>
+                          </div>
+                        `;
+                    } else {
+                        cardContent = `
+                          <div class="codepen-card-content">
+                            <div class="product-image">
+                              <img src="${product.image}" alt="${product.name}">
+                            </div>
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-description">${product.description.substring(0, 60)}...</div>
+                            <div class="product-rating">${starsHtml} (${product.rating})</div>
+                            <div class="product-price">${formatPrice(product.price, currentCurrency)}</div>
+                          </div>
+                        `;
+                    }
+
+                    cardButton.innerHTML = `<span>${cardContent}</span>`;
+
+                    cardButton.addEventListener('click', () => {
+                        openModal(product);
+                    });
+
+                    grid.appendChild(cardButton);
+                });
+            }
+        }
+
+        // Toggle mobile menu
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const icon = navToggle.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.querySelector('i').classList.add('fa-bars');
+                navToggle.querySelector('i').classList.remove('fa-times');
+            });
+        });
+
+        // Format price based on currency
+        function formatPrice(price, currency) {
+            const convertedPrice = price * currencyRates[currency];
+            
+            // Format number with Arabic-Indic digits if possible
+            const formattedPrice = new Intl.NumberFormat('ar-EG').format(convertedPrice.toFixed(2));
+            
+            // Add currency symbol
+            const currencySymbols = {
+                'EGP': 'جنيه',
+                'USD': 'دولار',
+                'SAR': 'ريال',
+                'AED': 'درهم',
+                'KWD': 'دينار'
+            };
+            
+            return `${formattedPrice} ${currencySymbols[currency]}`;
+        }
+
+        // Update price display in modal
+        function updateModalPrice(price) {
+            modalPrice.textContent = `السعر: ${formatPrice(price, currentCurrency)}`;
+        }
+
+        // Open modal with product details
+        function openModal(product) {
+            if (!product) return;
+            
+            modalTitle.textContent = product.name;
+            modalDescription.textContent = product.description;
+            modalImage.src = product.image;
+            modalImage.alt = product.name;
+            updateModalPrice(product.price);
+            
+            // Clear previous features
+            modalFeatures.innerHTML = '';
+            
+            // Add features
+            product.features.forEach(feature => {
+                const li = document.createElement('li');
+                li.textContent = feature;
+                modalFeatures.appendChild(li);
+            });
+            
+            // Show modal
+            modalOverlay.classList.add('active');
+            
+            // Set WhatsApp link
+            const whatsappNumber = '201018516175';
+            const whatsappMessage = `مرحبًا، أريد طلب المنتج: ${product.name} - السعر: ${formatPrice(product.price, currentCurrency)}`;
+            btnOrder.onclick = () => {
+                window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+            };
+        }
+
+        // Close modal
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+        }
+
+        // Event listeners
+        modalClose.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Currency change handler
+        currencySelect.addEventListener('change', () => {
+            currentCurrency = currencySelect.value;
+            fillProductsGrid(); // Refresh all prices with new currency
+            
+            // If modal is open, update its price too
+            if (modalOverlay.classList.contains('active')) {
+                const productId = modalOverlay.getAttribute('data-product-id');
+                if (productId) {
+                    // Find product in any category
+                    let product;
+                    for (const category in products) {
+                        product = products[category].find(p => p.id === productId);
+                        if (product) break;
+                    }
+                    if (product) {
+                        updateModalPrice(product.price);
+                    }
+                }
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            fillProductsGrid();
+        });
+    </script>
+</body>
+</html>

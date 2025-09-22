@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENTEC Pro - حلول رقمية متكاملة</title>
+    <link rel="icon" type="image/png" href="n.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* الأساسيات */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            direction: rtl;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #fff;
+            font-weight: 800;
+        }
+        
+        /* شريط التنقل - تم التعديل */
+        nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-img {
+            height: 40px;
+            width: auto;
+            display: block;
+            max-width: 100%;
+        }
+        
+        .menu-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #fff;
+            z-index: 1001;
+        }
+        
+        .menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 70%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(100%);
+            transition: transform 0.4s ease-in-out;
+            z-index: 999;
+        }
+        
+        .menu.active {
+            transform: translateX(0);
+        }
+        
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 15px 0;
+            padding: 10px 20px;
+            transition: color 0.3s;
+        }
+        
+        .menu a:hover {
+            color: #e81cff;
+        }
+        
+        /* الهيدر - تم التعديل بشكل كبير */
+        header {
+            height: 70vh;
+            min-height: 400px;
+            max-height: 700px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+            margin-top: 70px;
+        }
+        
+        #header-image {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            opacity: 1;
+            pointer-events: none;
+        }
+        
+        .header-content {
+            text-align: center;
+            z-index: 2;
+            position: absolute;
+            width: 100%;
+            bottom: 30px; /* مسافة من أسفل الهيدر */
+            right: 0;
+            left: 0;
+            transform: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 20px;
+        }
+        
+        .cta-button {
+            position: relative;
+            width: 160px;
+            height: 50px;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            color: white;
+            flex-direction: column;
+            justify-content: center;
+            border: none;
+            padding: 12px;
+            gap: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 20px auto 0;
+            font-weight: 700;
+            text-decoration: none;
+            z-index: 10;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            left: -4px;
+            top: -1px;
+            margin: auto;
+            width: 168px;
+            height: 58px;
+            border-radius: 10px;
+            background: linear-gradient(-45deg, #e81cff 0%, #40c9ff 100%);
+            z-index: -10;
+            pointer-events: none;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .cta-button::after {
+            content: "";
+            z-index: -1;
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(-45deg, #fc00ff 0%, #00dbde 100%);
+            transform: translate3d(0, 0, 0) scale(0.95);
+            filter: blur(20px);
+        }
+        
+        .cta-button:hover::after {
+            filter: blur(30px);
+        }
+        
+        .cta-button:hover::before {
+            transform: rotate(-180deg);
+        }
+        
+        .cta-button:active::before {
+            scale: 0.7;
+        }
+        
+        /* باقي الأنماط تبقى كما هي */
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .card {
+            position: relative;
+            width: 190px;
+            height: 254px;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            padding: 12px;
+            gap: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            left: -5px;
+            margin: auto;
+            width: 200px;
+            height: 264px;
+            border-radius: 10px;
+            background: linear-gradient(-45deg, #e81cff 0%, #40c9ff 100%);
+            z-index: -10;
+            pointer-events: none;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .card::after {
+            content: "";
+            z-index: -1;
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(-45deg, #fc00ff 0%, #00dbde 100%);
+            transform: translate3d(0, 0, 0) scale(0.95);
+            filter: blur(20px);
+        }
+        
+        .card-logo {
+            width: 64px;
+            height: 64px;
+            font-size: 3.2rem; /* للأيقونات Font Awesome */
+            object-fit: contain;
+            margin: 0 auto 8px auto;
+            display: block;
+            filter: drop-shadow(0 2px 8px #0004);
+        }
+        
+        .card-heading {
+            font-size: 20px;
+            text-transform: capitalize;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .card p:not(.card-heading) {
+            font-size: 14px;
+            color: #fff;
+        }
+        
+        .card p:last-child {
+            color: #e81cff;
+            font-weight: 600;
+        }
+        
+        .card:hover::after {
+            filter: blur(30px);
+        }
+        
+        .card:hover::before {
+            transform: rotate(-90deg) scaleX(1.34) scaleY(0.77);
+        }
+        
+        .about {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+        
+        .contact-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .contact-card {
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            transition: transform 0.3s;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .contact-card i {
+            font-size: 2rem;
+            color: #e2c4e6d8;
+        }
+        
+        .contact-card p {
+            color: #fff;
+        }
+        
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .payment-methods i {
+            font-size: 2.5rem;
+            color: #fff;
+        }
+        
+        .payment-logo {
+            height: 40px;
+            width: auto;
+            margin: 0 10px;
+            object-fit: contain;
+            background: #fff;
+            border-radius: 8px;
+            padding: 4px 8px;
+            box-shadow: 0 2px 8px #0002;
+            transition: transform 0.2s;
+        }
+        
+        .payment-logo:hover {
+            transform: scale(1.08);
+        }
+        
+        @media (max-width: 576px) {
+            .payment-logo {
+                height: 28px;
+                padding: 2px 4px;
+                margin: 0 4px;
+            }
+        }
+        
+        /* الأعمال */
+        #portfolio {
+            background: #000;
+            padding: 80px 0;
+        }
+        
+        .portfolio-item {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .portfolio-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .portfolio-item i {
+            font-size: 2rem;
+            color: #40c9ff;
+        }
+        
+        .portfolio-item p {
+            color: #fff;
+        }
+        
+        .portfolio-logo {
+            width: 72px;
+            height: 72px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto 8px auto;
+            filter: drop-shadow(0 2px 8px #0004);
+        }
+        
+        footer {
+            background: #000;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #e81cff;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .social-icons a {
+            color: #fff;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: #e81cff;
+        }
+        
+        /* التجاوب مع الشاشات المختلفة - تم التعديل */
+        @media (max-width: 992px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .logo-img {
+                height: 35px;
+            }
+            
+            header {
+                height: 60vh;
+                min-height: 350px;
+                max-height: 600px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 2rem;
+            }
+            
+            nav {
+                padding: 12px 20px;
+            }
+            
+            .logo {
+                font-size: 1.2rem;
+            }
+            
+            .logo-img {
+                height: 32px;
+            }
+            
+            .cards-container {
+                gap: 20px;
+            }
+            
+            .card {
+                width: 160px;
+                height: 220px;
+            }
+            
+            .card::before {
+                width: 170px;
+                height: 230px;
+            }
+            
+            header {
+                height: 50vh;
+                min-height: 300px;
+                max-height: 500px;
+                margin-top: 60px;
+            }
+            
+            .header-content {
+                padding: 0 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            nav {
+                padding: 10px 15px;
+            }
+            
+            .logo {
+                font-size: 1.1rem;
+            }
+            
+            .logo-img {
+                height: 28px;
+            }
+            
+            .card {
+                width: 140px;
+                height: 200px;
+            }
+            
+            .card::before {
+                width: 150px;
+                height: 210px;
+            }
+            
+            header {
+                height: 40vh;
+                min-height: 250px;
+                max-height: 400px;
+                margin-top: 50px;
+            }
+            
+            .cta-button {
+                width: 140px;
+                height: 45px;
+                font-size: 0.9rem;
+            }
+            
+            .cta-button::before {
+                width: 148px;
+                height: 53px;
+            }
+            
+            .menu a {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .logo {
+                font-size: 1rem;
+            }
+            
+            .logo-img {
+                height: 24px;
+            }
+            
+            header {
+                height: 35vh;
+                min-height: 200px;
+                max-height: 350px;
+            }
+            
+            .card {
+                width: 130px;
+                height: 180px;
+            }
+            
+            .card::before {
+                width: 140px;
+                height: 190px;
+            }
+        }
+        
+        /* بقع خلفية شفافة وملونة */
+        .background-blobs {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+           
+        }
+        
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.23;
+            mix-blend-mode: lighten;
+            transition: opacity 0.5s;
+        }
+        
+        /* بقع بلون #5c9abd */
+        .blob1 {
+            width: 320px; height: 320px;
+            background: #5c9abd;
+            top: 10%; right: 5%;
+        }
+        .blob2 {
+            width: 180px; height: 180px;
+            background: #5c9abd;
+            top: 60%; left: 10%;
+        }
+        
+        /* بقع بلون #81039b */
+        .blob3 {
+            width: 250px; height: 250px;
+            background: #81039b;
+            top: 35%; left: 60%;
+        }
+        .blob4 {
+            width: 120px; height: 120px;
+            background: #81039b;
+            bottom: 15%; right: 20%;
+        }
+        
+        /* بقع إضافية بأحجام وأماكن مختلفة */
+        .blob5 {
+            width: 200px; height: 200px;
+            background: #5c9abd;
+            bottom: 5%; left: 35%;
+        }
+        .blob6 {
+            width: 140px; height: 140px;
+            background: #81039b;
+            top: 20%; right: 40%;
+        }
+
+        /* تكبير لوجو كروت شاهد أعمالنا فقط */
+        #portfolio .card-logo {
+            width: 90px;
+            height: 90px;
+            max-width: 30vw;
+            max-height: 30vw;
+        }
+
+        @media (max-width: 768px) {
+            .card-logo {
+                width: 48px;
+                height: 48px;
+                font-size: 2.2rem;
+                max-width: 18vw;
+                max-height: 18vw;
+            }
+            #portfolio .card-logo {
+                width: 64px;
+                height: 64px;
+                max-width: 24vw;
+                max-height: 24vw;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-logo {
+                width: 36px;
+                height: 36px;
+                font-size: 1.5rem;
+                max-width: 16vw;
+                max-height: 16vw;
+            }
+            #portfolio .card-logo {
+                width: 48px;
+                height: 48px;
+                max-width: 20vw;
+                max-height: 20vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <nav>
+        <img src="shirt.png" alt="ENTEC Pro Logo" class="logo-img">
+        <div class="menu-icon" id="menu-icon">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="menu" id="menu">
+            <a href="service1.html">الخدمات</a>
+            <a href="products.html">المنتجات</a>
+            <a href="books.html">خدمات أخرى</a>
+            <a href="social.html">من نحن</a>
+            <a href="free.html">الخدمات المجانية</a>
+            <a href="social.html">المطورين</a>
+        </div>
+    </nav>
+
+    <!-- الهيدر -->
+    <header>
+        <img src="purple.png" alt="header image" id="header-image">
+        <div class="header-content">
+            <a href="social.html" class="cta-button">اتصل بنا</a>
+        </div>
+    </header>
+
+    <!-- باقي المحتوى يبقى كما هو -->
+    <!-- الخدمات -->
+    <section id="services">
+        <div class="container">
+            <h2>الخدمات الرقمية</h2>
+            <div class="cards-container">
+                <a href="service1.html" class="card" style="text-decoration:none;">
+                    <i class="fas fa-server card-logo"></i>
+                    <p class="card-heading">تزويد</p>
+                    <p>نوفر أحدث الحلول التقنية</p>
+                    <p>التفاصيل</p>
+                </a>
+                <a href="service1.html" class="card" style="text-decoration:none;">
+                    <i class="fas fa-paint-brush card-logo"></i>
+                    <p class="card-heading">تصميمات</p>
+                    <p>تصاميم إبداعية وجذابة</p>
+                    <p>التفاصيل</p>
+                </a>
+                <a href="service1.html" class="card" style="text-decoration:none;">
+                    <i class="fas fa-globe card-logo"></i>
+                    <p class="card-heading">إنشاء مواقع ويب</p>
+                    <p>مواقع ويب عصرية ومتجاوبة</p>
+                    <p>التفاصيل</p>
+                </a>
+                <a href="service1.html" class="card" style="text-decoration:none;">
+                    <i class="fas fa-tv card-logo"></i>
+                    <p class="card-heading">IPTV</p>
+                    <p>خدمات بث تلفزيوني عبر الإنترنت</p>
+                    <p>التفاصيل</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- المنتجات -->
+    <section id="products">
+        <div class="container">
+            <h2>المنتجات</h2>
+            <div class="cards-container">
+                <a href="products.html" class="card" style="text-decoration:none;">
+                    <i class="fas fa-microchip card-logo"></i>
+                    <p class="card-heading">إلكترونيات</p>
+                    <p>أحدث الأجهزة الإلكترونية</p>
+                    <p>التفاصيل</p>
+                </a>
+                <a href="products.html" class="card" style="text-decoration:none;">
+                    <i class="fas fa-mobile-alt card-logo"></i>
+                    <p class="card-heading">موبيلات</p>
+                    <p>هواتف ذكية بمواصفات رائدة</p>
+                    <p>التفاصيل</p>
+                </a>
+                <a href="products.html" class="card" style="text-decoration:none;">
+                    <i class="fas fa-clock card-logo"></i>
+                    <p class="card-heading">ساعات</p>
+                    <p>ساعات ذكية وعصرية</p>
+                    <p>التفاصيل</p>
+                </a>
+                <a href="products.html" class="card" style="text-decoration:none;">
+                    <i class="fas fa-laptop card-logo"></i>
+                    <p class="card-heading">لابتوب</p>
+                    <p>أجهزة laptop عالية الأداء</p>
+                    <p>التفاصيل</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- خدمات أخرى -->
+    <section id="other-services">
+        <div class="container">
+            <h2>خدمات أخرى</h2>
+            <div class="cards-container">
+                <a href="books.html" class="card" style="text-decoration:none;">
+                    <i class="fas fa-chalkboard-teacher card-logo"></i>
+                    <p class="card-heading">كورسات</p>
+                    <p>دورات تدريبية متخصصة</p>
+                    <p>التفاصيل</p>
+                </a>
+                <a href="books.html" class="card" style="text-decoration:none;">
+                    <i class="fas fa-book card-logo"></i>
+                    <p class="card-heading">كتب</p>
+                    <p>مراجع وكتب تعليمية</p>
+                    <p>التفاصيل</p>
+                </a>
+                <a href="books.html" class="card" style="text-decoration:none;">
+                    <i class="fas fa-cogs card-logo"></i>
+                    <p class="card-heading">برامج</p>
+                    <p>للويندوز والاندرويد</p>
+                    <p>التفاصيل</p>
+                </a>
+                <a href="books.html" class="card" style="text-decoration:none;">
+                    <i class="fas fa-star card-logo"></i>
+                    <p class="card-heading">اشتراكات</p>
+                    <p>اشتراكات في خدمات مميزة</p>
+                    <p>التفاصيل</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- من نحن -->
+    <section id="about">
+        <div class="container">
+            <h2>من نحن</h2>
+            <p class="about">
+                "نحن شركة ENTEC Pro نوفر حلولًا رقمية مبتكرة، وخدمات تقنية متكاملة، ومنتجات عالية الجودة، لنساعد عملاءنا على تحقيق النجاح في عالم التكنولوجيا المتطور. نتميز بالإبداع والجودة ونحرص على تقديم أحدث الحلول التقنية التي تلبي احتياجات عملائنا."
+            </p>
+        </div>
+    </section>
+
+    <!-- التواصل -->
+    <section id="contact">
+        <div class="container">
+            <h2>طرق التواصل</h2>
+            <div class="contact-cards">
+                <div class="contact-card">
+                    <i class="fab fa-whatsapp"></i>
+                    <p>واتساب</p>
+                </div>
+                <div class="contact-card">
+                    <i class="far fa-envelope"></i>
+                    <p>البريد الإلكتروني</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-phone"></i>
+                    <p>هاتف</p>
+                </div>
+                <div class="contact-card">
+                    <i class="far fa-comments"></i>
+                    <p>وسائل التواصل الاجتماعي</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- طرق الدفع -->
+    <section id="payment">
+        <div class="container">
+            <h2>طرق الدفع</h2>
+            <div class="payment-methods">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" class="payment-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard" class="payment-logo">
+                <img src="data:image/png;base64,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" alt="Vodafone Cash" class="payment-logo">
+                <img src="data:image/jpeg;base64,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" alt="Fawry" class="payment-logo">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXn9_a484oFbKNCoyTrU70ggwAT63mLjygWA&s" alt="Bitcoin" class="payment-logo">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_Yk7VOVstP8GaB9vCkJn8JNcHgbvps987wA&s" alt="Ethereum" class="payment-logo">
+                <!-- أضف عملات رقمية أخرى إذا أردت -->
+            </div>
+        </div>
+    </section>
+
+    <!-- أعمالنا -->
+    <section id="portfolio">
+        <div class="container">
+            <h2>شاهد أعمالنا</h2>
+            <div class="cards-container">
+                <a href="https://eniptv.store/" class="card" style="text-decoration:none;" target="_blank">
+                    <img src="https://eniptv.store/iptv.png" alt="Entec TV Logo" class="card-logo">
+                    <p class="card-heading">Entec tv</p>
+                    <p>موقع لخدمات ال TV</p>
+                    <p>التفاصيل</p>
+                </a>
+                <a href="https://github.com/elfalk" class="card" style="text-decoration:none;" target="_blank">
+                    <img src="Asel.png" alt="Asel Logo" class="card-logo">
+                    <p class="card-heading">Asel</p>
+                    <p>موقع للتجارة الاكترونيه</p>
+                    <p>التفاصيل</p>
+                </a>
+                <a href="https://elbadry.pro/" class="card" style="text-decoration:none;" target="_blank">
+                    <img src="https://elbadry.pro/imge/2.png" alt="Elbadry Logo" class="card-logo">
+                    <p class="card-heading">Elbadry</p>
+                    <p>موقع خاص بمكاتب ووكلاء السياحه</p>
+                    <p>التفاصيل</p>
+                </a>
+                <a href="https://basmh.online/" class="card" style="text-decoration:none;" target="_blank">
+                    <img src="https://basmh.online/f.png" alt="Basmah Logo" class="card-logo">
+                    <p class="card-heading">basmh</p>
+                    <p>موقع سياحي متكامل</p>
+                    <p>التفاصيل</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="container">
+            <p>© 2025 جميع الحقوق محفوظة لشركة ENTEC Pro</p>
+            <div class="footer-links">
+                <a href="free.html">الخدمات المجانية</a>
+                <a href="service1.html">تزويد</a>
+                <a href="social.html">التواصل</a>
+                <a href="#">سياسة الخصوصية</a>
+            </div>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/share/16iCzaod1C/"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://x.com/Youssef011020?t=oNgnw7NKtrYVwG30izHPqw&s=09"><i class="fab fa-twitter"></i></a>
+                <a href="https://whatsapp.com/channel/0029VbB8jPFIyPtW3lkeg33y"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.linkedin.com/in/yoseef-elbadry-106037380?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript للتحكم في قائمة الهاتف
+        document.getElementById('menu-icon').addEventListener('click', function() {
+            document.getElementById('menu').classList.toggle('active');
+            
+            if (document.getElementById('menu').classList.contains('active')) {
+                this.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                this.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+        
+        // إغلاق القائمة عند النقر على رابط
+        document.querySelectorAll('.menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('menu').classList.remove('active');
+                document.getElementById('menu-icon').innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+    </script>
+</body>
+</html>
